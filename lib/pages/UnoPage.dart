@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:manejadores_estados/models/Usuario.dart';
 import 'package:manejadores_estados/pages/DosPage.dart';
+import 'package:manejadores_estados/services/UsuarioServices.dart';
 
 class UnoPage extends StatelessWidget {
   static const String id = 'Uno';
@@ -14,12 +16,22 @@ class UnoPage extends StatelessWidget {
         title: Text('Pagina 1'),
         centerTitle: true,
       ),
-      body: InformacionUsuario(),
+      body: StreamBuilder(
+        stream: usuarioService.usuarioStream,
+        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+          // Si tiene un usuario hasData
+          return snapshot.hasData
+              ? InformacionUsuario(usuario: snapshot.data)
+              : Center(child: Text('No hay informacion del usuario'));
+        },
+      ),
     );
   }
 }
 
 class InformacionUsuario extends StatelessWidget {
+  final Usuario usuario;
+  const InformacionUsuario({this.usuario});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +50,10 @@ class InformacionUsuario extends StatelessWidget {
             height: 5,
           ),
           ListTile(
-            title: Text('Nombre:'),
+            title: Text('Nombre: ${this.usuario.nombre}'),
           ),
           ListTile(
-            title: Text('Edad:'),
+            title: Text('Edad: ${this.usuario.edad}'),
           ),
           Text(
             'Profeciones',
