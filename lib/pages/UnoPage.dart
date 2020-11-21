@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manejadores_estados/bloc/usuario/usuario_bloc.dart';
+import 'package:manejadores_estados/models/Usuario.dart';
 import 'package:manejadores_estados/pages/DosPage.dart';
 
 class UnoPage extends StatelessWidget {
@@ -13,13 +16,35 @@ class UnoPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Pagina 1'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              BlocProvider.of<UsuarioBloc>(context).add(BorrarUsuario());
+            },
+          ),
+        ],
       ),
-      body: InformacionUsuario(),
+      body: BlocBuilder<UsuarioBloc, UsuarioState>(
+        builder: (_, state) {
+          if (state.existeUsuario) {
+            return InformacionUsuario(
+              usuario: state.usuario,
+            );
+          } else {
+            return Center(
+              child: Text('No hay un usuario seleccionado'),
+            );
+          }
+        },
+      ),
     );
   }
 }
 
 class InformacionUsuario extends StatelessWidget {
+  final Usuario usuario;
+  const InformacionUsuario({this.usuario});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +63,10 @@ class InformacionUsuario extends StatelessWidget {
             height: 5,
           ),
           ListTile(
-            title: Text('Nombre:'),
+            title: Text('Nombre: ${usuario.nombre}'),
           ),
           ListTile(
-            title: Text('Edad:'),
+            title: Text('Edad: ${usuario.edad}'),
           ),
           Text(
             'Profeciones',
@@ -51,14 +76,18 @@ class InformacionUsuario extends StatelessWidget {
             color: Colors.black,
             height: 5,
           ),
-          ListTile(
+          /*ListTile(
             title: Text('Profesion 1'),
-          ),
-          ListTile(
-            title: Text('Profesion 2'),
-          ),
-          ListTile(
-            title: Text('Profesion 2'),
+          ),*/
+          Expanded(
+            child: ListView.builder(
+              itemCount: usuario.profesiones.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  title: Text('${usuario.profesiones[index]}'),
+                );
+              },
+            ),
           ),
         ],
       ),
