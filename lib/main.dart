@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manejadores_estados/bloc/usuario/UsuarioBloc.dart';
 import 'package:manejadores_estados/pages/DosPage.dart';
 import 'package:manejadores_estados/pages/UnoPage.dart';
 void main(){
@@ -12,17 +14,22 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
     ]);
-    return MaterialApp(
-      title: 'Material App',
-      theme: ThemeData(
-        primaryColor:Colors.blue
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_)=> new UsuarioBloc(),),
+      ],
+      child: MaterialApp(
+        title: 'Material App',
+        theme: ThemeData(
+          primaryColor:Colors.blue
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: UnoPage.id,
+        routes: {
+          UnoPage.id: (_)=>UnoPage(),
+          DosPage.id: (_)=>DosPage(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: UnoPage.id,
-      routes: {
-        UnoPage.id: (_)=>UnoPage(),
-        DosPage.id: (_)=>DosPage(),
-      },
     );
   }
 }
