@@ -10,9 +10,9 @@ class DosPage extends StatelessWidget {
       appBar:AppBar(
             title: StreamBuilder(
               stream: usuarioService.usuarioStream,
-              builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot){
+              builder: (BuildContext context, AsyncSnapshot<Usuario?> snapshot){
                 return snapshot.hasData
-                ? Text('Nombre: ${snapshot.data.nombre}')
+                ? Text('Nombre: ${snapshot.data!.nombre}')
                 : Text('Pagina 2');
               },
             ),

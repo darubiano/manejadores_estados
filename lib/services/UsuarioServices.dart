@@ -4,14 +4,14 @@ import 'package:manejadores_estados/models/Usuario.dart';
 
 // Singleton
 class _UsuarioService {
-  Usuario _usuario;
+  Usuario? _usuario;
   //Stream con el broadcast emite a todos los streams
-  StreamController<Usuario> _usuarioStreamController = new StreamController<Usuario>.broadcast();
+  StreamController<Usuario?> _usuarioStreamController = new StreamController<Usuario?>.broadcast();
 
-  Usuario get usuario => this._usuario;
+  Usuario? get usuario => this._usuario;
   bool get existeUsuario=>(this._usuario != null) ? true:false;
 
-  Stream<Usuario> get usuarioStream => _usuarioStreamController.stream;
+  Stream<Usuario?> get usuarioStream => _usuarioStreamController.stream;
 
   void cargarUsuario(Usuario user){
     this._usuario = user;
@@ -20,14 +20,14 @@ class _UsuarioService {
   }
 
   void cambiarEdad(int edad){
-    this._usuario.edad = edad;
+    this._usuario!.edad = edad;
     // cargar el usuario al stream
     _usuarioStreamController.add(this._usuario);
   }
 
   // Limpiar stream
   dispose(){
-    _usuarioStreamController?.close();
+    _usuarioStreamController.close();
   }
 
 }

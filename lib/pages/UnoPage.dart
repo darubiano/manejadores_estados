@@ -18,7 +18,7 @@ class UnoPage extends StatelessWidget {
       ),
       body: StreamBuilder(
         stream: usuarioService.usuarioStream,
-        builder: (BuildContext context, AsyncSnapshot<Usuario> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<Usuario?> snapshot) {
           // Si tiene un usuario hasData
           return snapshot.hasData
               ? InformacionUsuario(usuario: snapshot.data)
@@ -30,7 +30,7 @@ class UnoPage extends StatelessWidget {
 }
 
 class InformacionUsuario extends StatelessWidget {
-  final Usuario usuario;
+  final Usuario? usuario;
   const InformacionUsuario({this.usuario});
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,10 @@ class InformacionUsuario extends StatelessWidget {
             height: 5,
           ),
           ListTile(
-            title: Text('Nombre: ${this.usuario.nombre}'),
+            title: Text('Nombre: ${this.usuario!.nombre}'),
           ),
           ListTile(
-            title: Text('Edad: ${this.usuario.edad}'),
+            title: Text('Edad: ${this.usuario!.edad}'),
           ),
           Text(
             'Profeciones',
