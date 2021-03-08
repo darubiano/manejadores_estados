@@ -18,6 +18,7 @@ class UnoPage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(icon: Icon(Icons.exit_to_app), onPressed: (){
+            // ignore: close_sinks
             final bloc = BlocProvider.of<UsuarioCubit>(context);
             bloc.borrarUsuario();
           },),

@@ -7,6 +7,7 @@ class DosPage extends StatelessWidget {
   static const String id = 'Dos';
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
     final bloc = BlocProvider.of<UsuarioCubit>(context);
     return Scaffold(
       appBar: AppBar(
